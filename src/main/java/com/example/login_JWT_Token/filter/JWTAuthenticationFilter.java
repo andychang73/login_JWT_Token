@@ -16,9 +16,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.ArrayList;
 
-@Component
 public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 
     @Autowired
@@ -32,7 +30,7 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         try{
             User creds = new ObjectMapper().readValue(request.getInputStream(), User.class);
 
-            return authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(creds.getName(), creds.getPassword(), new ArrayList<>()));
+            return authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(creds.getUsername(), creds.getPassword(), creds.getAuthorities()));
         }catch(IOException e){
             throw new RuntimeException();
         }
@@ -40,9 +38,9 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 
     @Override
     protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication authResult) throws IOException, ServletException {
-        String token = jwtUtils.generateToken(((User)authResult.getPrincipal()).getName());
+        String token = jwtUtils.generateToken(((User)authResult.getPrincipal()).getUsername());
 
-        String body = ((User)authResult.getPrincipal()).getName() + " " + token;
+        String body = /*((User)authResult.getPrincipal()).getUsername() + " " +*/ token;
 
         response.getWriter().write(body);
         response.getWriter().flush();

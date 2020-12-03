@@ -5,11 +5,13 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Mapper
 @Repository
 public interface UserMapper{
 
-     void insert(@Param("username") String username, @Param("password") String password);
+     void insert(@Param("username") String username, @Param("password") String password, @Param("roles") List<String> roles);
 
      User findUserByUsername(@Param("username") String username);
 }

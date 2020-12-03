@@ -5,6 +5,7 @@ import com.example.login_JWT_Token.entities.User;
 import com.example.login_JWT_Token.services.AuthenticationService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import java.security.NoSuchAlgorithmException;
@@ -22,7 +23,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
     @Override
     public boolean authenticate(User user) throws NoSuchAlgorithmException {
-        User dbUser = userService.loadUserByUsername(user.getName());
+        UserDetails dbUser = userService.loadUserByUsername(user.getUsername());
         if(Objects.isNull(dbUser)){
             return false;
         }

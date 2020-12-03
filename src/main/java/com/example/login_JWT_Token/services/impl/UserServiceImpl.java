@@ -11,6 +11,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 import java.util.Objects;
 
 import static java.util.Collections.emptyList;
@@ -27,14 +29,9 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     Utils utils;
 
     @Override
-    public void insert(String name, String password) {
-        userMapper.insert(name, password);
+    public void insert(String name, String password, List<String> roles) {
+        userMapper.insert(name, password, roles);
     }
-
-//    @Override
-//    public User findUserByUsername(String username) {
-//        return userMapper.findUserByUsername(username);
-//    }
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -42,6 +39,6 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         if(Objects.isNull(user)){
             throw new UsernameNotFoundException(username);
         }
-        return new org.springframework.security.core.userdetails.User(user.getName(), user.getPassword(), emptyList());
+        return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(), emptyList());
     }
 }
