@@ -15,8 +15,6 @@ import java.util.function.Function;
 @Component
 public class JwtUtils {
 
-
-
     private Claims getAllFromToken(String token){
         return Jwts.parser().setSigningKey(SecurityConstant.SECRET_KEY).parseClaimsJws(token).getBody();
     }
