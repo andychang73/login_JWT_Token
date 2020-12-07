@@ -12,7 +12,7 @@ import java.util.List;
 @Repository
 public interface UserMapper{
 
-     void insert(@Param("username") String username, @Param("password") String password, @Param("roles") List<Role> roles);
+     void insert(@Param("username") String username, @Param("password") String password, @Param("roles") String roles);
 
      User findUserByUsername(@Param("username") String username);
 }

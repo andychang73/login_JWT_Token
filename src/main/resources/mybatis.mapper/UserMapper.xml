@@ -12,7 +12,8 @@
 
     <insert id="insert">
         insert into User (username, password, roles)
-        values ("${username}", "${password}", "${roles}");
+        values (#{username}, #{password}, #{roles});
+--         values ("${username}", "${password}", "${roles}");
     </insert>
     <select id="findUserByUsername" resultMap="BaseResultMap">
         SELECT * FROM user WHERE username = #{username};
