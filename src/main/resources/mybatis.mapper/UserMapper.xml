@@ -4,15 +4,17 @@
 
     <resultMap id="BaseResultMap" type="com.example.login_JWT_Token.entities.User">
         <id column="id" property="id" jdbcType="INTEGER" />
-        <result column="name" property="userName" jdbcType="VARCHAR" />
+        <result column="name" property="username" jdbcType="VARCHAR" />
         <result column="password" property="password" jdbcType="VARCHAR" />
+        <result column="roles" property="roles" jdbcType="VARCHAR" javaType="com.example.login_JWT_Token.entities.Role" typeHandler="com.example.login_JWT_Token.handler.StringToListTypeHandler" />
+<!--        <result column="active" property="active" jdbcType="BOOLEAN" />-->
     </resultMap>
 
     <insert id="insert">
         insert into User (username, password, roles)
-        values (#{username}, #{password}, #{roles});
+        values ("${username}", "${password}", "${roles}");
     </insert>
-    <select id="findUserByUsername" resultType="com.example.login_JWT_Token.entities.User">
+    <select id="findUserByUsername" resultMap="BaseResultMap">
         SELECT * FROM user WHERE username = #{username};
     </select>
 

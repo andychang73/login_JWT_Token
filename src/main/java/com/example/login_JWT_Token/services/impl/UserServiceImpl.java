@@ -2,8 +2,8 @@ package com.example.login_JWT_Token.services.impl;
 
 import com.example.login_JWT_Token.Utils.Utils;
 import com.example.login_JWT_Token.dao.UserMapper;
+import com.example.login_JWT_Token.entities.Role;
 import com.example.login_JWT_Token.entities.User;
-import com.example.login_JWT_Token.model.UserVo;
 import com.example.login_JWT_Token.services.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,13 +29,14 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     Utils utils;
 
     @Override
-    public void insert(String name, String password, List<String> roles) {
+    public void insert(String name, String password, List<Role> roles) {
         userMapper.insert(name, password, roles);
     }
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         User user = userMapper.findUserByUsername(username);
+        log.info("user:{}", user);
         if(Objects.isNull(user)){
             throw new UsernameNotFoundException(username);
         }

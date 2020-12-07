@@ -5,6 +5,8 @@ import com.example.login_JWT_Token.entities.User;
 import com.example.login_JWT_Token.services.impl.UserServiceImpl;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 
@@ -20,16 +22,15 @@ public class UserController {
     @Autowired
     Utils utils;
 
+    @Autowired
+    PasswordEncoder passwordEncoder;
+
     @PostMapping("/create")
     public void insertUser(@RequestBody @Valid User user) {
         if(!utils.validatePassword(user.getPassword())){
             return;
         }
-        userServiceImpl.insert(user.getUsername(), user.getPassword(), user.getRoles());
-    }
-
-    @PostMapping("/login")
-    public String login(@RequestBody @Valid User user){
-        return user.toString();
+        String password = passwordEncoder.encode(user.getPassword());
+        userServiceImpl.insert(user.getUsername(), password, user.getRoles());
     }
 }

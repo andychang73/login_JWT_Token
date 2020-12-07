@@ -50,7 +50,7 @@ public class JwtUtils {
                 .setSubject(subject)
                 .setIssuedAt(new Date(System.currentTimeMillis()))
                 .setExpiration(new Date(System.currentTimeMillis() + SecurityConstant.JWT_VALIDITY))
-                .signWith(SignatureAlgorithm.ES512, SecurityConstant.SECRET_KEY)
+                .signWith(SignatureAlgorithm.HS256, SecurityConstant.SECRET_KEY)
                 .compact();
     }
 

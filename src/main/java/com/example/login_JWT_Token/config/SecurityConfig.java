@@ -58,15 +58,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         auth.userDetailsService(userService).passwordEncoder(encoder());
     }
 
-//    @Bean
-//    JWTAuthenticationFilter jwtAuthenticationFilter() throws Exception {
-//        return new JWTAuthenticationFilter();
-//    }
-
     @Bean
     CorsConfigurationSource corsConfigurationSource(){
         final UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-
         CorsConfiguration corsConfiguration = new CorsConfiguration().applyPermitDefaultValues();
         source.registerCorsConfiguration("/**", corsConfiguration);
         return source;
