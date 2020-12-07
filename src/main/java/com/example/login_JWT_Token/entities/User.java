@@ -3,6 +3,7 @@ package com.example.login_JWT_Token.entities;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.Value;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -41,6 +42,7 @@ public class User implements UserDetails {
     public User(User user){
         this.username = user.getUsername();
         this.password = user.getPassword();
+        this.roles = user.getRoles();
         this.active = user.isActive();
         this.authorities = user.getRoles().stream()
                 .map(r -> new SimpleGrantedAuthority(r.getRole()))
