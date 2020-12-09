@@ -13,17 +13,14 @@ import java.sql.CallableStatement;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 @Slf4j
-@MappedTypes({List.class})
+@MappedTypes({Set.class})
 @MappedJdbcTypes({JdbcType.VARCHAR})
-public class StringToListTypeHandler extends BaseTypeHandler<List<String>> {
+public class StringToListTypeHandler extends BaseTypeHandler<Set<String>> {
     @Override
-    public void setNonNullParameter(PreparedStatement preparedStatement, int i, List<String> strings, JdbcType jdbcType) throws SQLException {
+    public void setNonNullParameter(PreparedStatement preparedStatement, int i, Set<String> strings, JdbcType jdbcType) throws SQLException {
         if(Objects.isNull(jdbcType)){
             preparedStatement.setString(i, StringUtils.collectionToCommaDelimitedString(strings));
         }else{
@@ -32,9 +29,9 @@ public class StringToListTypeHandler extends BaseTypeHandler<List<String>> {
     }
 
     @Override
-    public List<String> getNullableResult(ResultSet resultSet, String s) throws SQLException {
+    public Set<String> getNullableResult(ResultSet resultSet, String s) throws SQLException {
         String str = resultSet.getString(s);
-        List<String> roles = new ArrayList<>();
+        Set<String> roles = new HashSet<>();
         String[] rolesArray = str.split(",");
         for(String r: rolesArray){
             roles.add(r);
@@ -43,9 +40,9 @@ public class StringToListTypeHandler extends BaseTypeHandler<List<String>> {
     }
 
     @Override
-    public List<String> getNullableResult(ResultSet resultSet, int i) throws SQLException {
+    public Set<String> getNullableResult(ResultSet resultSet, int i) throws SQLException {
         String str = resultSet.getString(i);
-        List<String> roles = new ArrayList<>();
+        Set<String> roles = new HashSet<>();
         String[] rolesArray = str.split(",");
         for(String r: rolesArray){
             roles.add(r);
@@ -54,9 +51,9 @@ public class StringToListTypeHandler extends BaseTypeHandler<List<String>> {
     }
 
     @Override
-    public List<String> getNullableResult(CallableStatement callableStatement, int i) throws SQLException {
+    public Set<String> getNullableResult(CallableStatement callableStatement, int i) throws SQLException {
         String str = callableStatement.getString(i);
-        List<String> roles = new ArrayList<>();
+        Set<String> roles = new HashSet<>();
         String[] rolesArray = str.split(",");
         for(String r: rolesArray){
             roles.add(r);

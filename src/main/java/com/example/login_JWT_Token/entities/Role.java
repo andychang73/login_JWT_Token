@@ -10,6 +10,10 @@ import lombok.NoArgsConstructor;
 public class Role {
     private String role;
 
+    public String getRole(){
+        return this.role;
+    }
+
     @Override
     public String toString(){
         return this.role;

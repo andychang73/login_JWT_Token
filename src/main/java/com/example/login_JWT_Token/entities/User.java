@@ -3,17 +3,16 @@ package com.example.login_JWT_Token.entities;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.Value;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.util.Collection;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Data
@@ -33,11 +32,11 @@ public class User implements UserDetails {
     @NotBlank
     private String password;
 
-    private List<Role> roles;
+    private Set<Role> roles;
 
     private boolean active;
 
-    private List<GrantedAuthority> authorities;
+    private Set<GrantedAuthority> authorities;
 
     public User(User user){
         this.username = user.getUsername();
@@ -46,12 +45,12 @@ public class User implements UserDetails {
         this.active = user.isActive();
         this.authorities = user.getRoles().stream()
                 .map(r -> new SimpleGrantedAuthority(r.getRole()))
-                .collect(Collectors.toList());
+                .collect(Collectors.toSet());
     }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return null;
+        return this.authorities;
     }
 
     @Override
