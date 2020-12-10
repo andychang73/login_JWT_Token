@@ -10,7 +10,7 @@
                 typeHandler="com.example.login_JWT_Token.handler.StringToListTypeHandler" />
         <result column="active" property="active" jdbcType="BOOLEAN" />
         <result column="authorities" property="authorities" jdbcType="VARCHAR" javaType="org.springframework.security.core.GrantedAuthority"
-                typeHandler="com.example.login_JWT_Token.handler.StringToListTypeHandler"/>
+                typeHandler="com.example.login_JWT_Token.handler.StringToGrantedAuthorityHandler"/>
     </resultMap>
 
     <insert id="insert">
@@ -20,6 +20,5 @@
     <select id="findUserByUsername" resultMap="BaseResultMap">
         SELECT * FROM user WHERE username = #{username};
     </select>
-
 
 </mapper>
